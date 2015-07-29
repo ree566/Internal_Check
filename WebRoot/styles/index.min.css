@@ -1,0 +1,21 @@
+#buttons{float:right;text-align:right}#title{text-align:center;clear:both}strong{font-size:28px;color:#dc143c}select{text-align:center}#type{color:red}font{background-color:#ff0}a{text-decoration:none}input[type="text"]{width:80%}ul{list-style-type:lower-roman}.new_ans{background-color:red}.new_iso{background-color:red}textarea{resize:none}
+
+.que{
+    list-style-image: url(q_1.jpg);
+    color: #4788bf;
+    font-size: 18px;
+}
+.ans{
+    list-style-image: url(a_1.jpg);
+    opacity:0.8;
+    font-size: 18px;
+}
+.iso{
+    list-style-image: url(iso.jpg);
+}
+#typeforbg{
+    /*background-color: #e3e3e3;*/
+}
+.point{
+    cursor: pointer; 
+}

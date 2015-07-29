@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context antiJARLocking="true" path="/Internal_Check">
+    <Resource 
+        name="jdbc/demo" 
+        auth="Container" 
+        type="javax.sql.DataSource" 
+        maxActive="100" 
+        maxIdle="30" 
+        maxWait="10000" 
+        username="kevin1"
+        password="kevin1" 
+        driverClassName="net.sourceforge.jtds.jdbc.Driver" 
+        url="jdbc:jtds:sqlserver://MFG-SEVER:1433/Internal_Check" 
+    />
+</Context>
