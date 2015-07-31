@@ -27,10 +27,10 @@ import org.apache.log4j.Logger;
 @WebServlet(
         urlPatterns = {"/Mail.do"},
         initParams = {
-            @WebInitParam(name = "mailHost", value = "smtp.gmail.com"),
+            @WebInitParam(name = "mailHost", value = "kevin@172.20.131.52"),
             @WebInitParam(name = "mailPort", value = "587"),
-            @WebInitParam(name = "username", value = "java.email.service@gmail.com"),
-            @WebInitParam(name = "password", value = "75687568")
+            @WebInitParam(name = "username", value = "kevin"),
+            @WebInitParam(name = "password", value = "kevin")
         }
 )
 public class Mail extends HttpServlet {
