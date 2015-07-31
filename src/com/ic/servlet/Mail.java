@@ -27,9 +27,9 @@ import org.apache.log4j.Logger;
 @WebServlet(
         urlPatterns = {"/Mail.do"},
         initParams = {
-            @WebInitParam(name = "mailHost", value = "kevin@172.20.131.52"),
-            @WebInitParam(name = "mailPort", value = "587"),
-            @WebInitParam(name = "username", value = "kevin"),
+            @WebInitParam(name = "mailHost", value = "172.20.131.52"),
+            @WebInitParam(name = "mailPort", value = "25"),
+            @WebInitParam(name = "username", value = "kevin@172.20.131.52"),
             @WebInitParam(name = "password", value = "kevin")
         }
 )
@@ -71,7 +71,7 @@ public class Mail extends HttpServlet {
         res.setCharacterEncoding("UTF-8");
         res.setContentType("text/html");
         PrintWriter out = res.getWriter();
-        String from = "java.email.service@gmail.com";
+        String from = "kevin@172.20.131.52";
         String to = req.getParameter("to");
         if (to == null) {
             req.getRequestDispatcher("forgotmail.jsp").forward(req, res);
@@ -104,29 +104,31 @@ public class Mail extends HttpServlet {
                     Cookie cookie = new Cookie(st, id);
                     cookie.setMaxAge(600);
                     res.addCookie(cookie);
-                    text.append("<font style='color:red'>請勿回覆此信</font><br />");
-                    text.append("您在<strong>");
+                    text.append("<p><font style='color:red'>請勿回覆此信</font></p>");
+                    text.append("<p>稽核系統訊息:</p>");
+                    text.append("<p>您在<strong>");
                     text.append(new Date());
                     text.append("</strong>時間於下列ip提出了密碼變更請求<strong>");
                     text.append(ipAddress);
-                    text.append("</strong><br />若要找回密碼請點選連結<a href=\"");
+                    text.append("</strong></p><p>若要找回密碼請點選連結<a href=\"");
                     text.append(sb.replace(sb.indexOf(req.getServletPath()), sb.length(), "/SessionView.do?id="));
                     text.append(st);
-                    text.append("\">密碼找回</a>");
+                    text.append("\">密碼找回</a></p>");
+                    text.append("<p>(若無法開啟連結請在連結上按右鍵 > 複製超連結到瀏覽器上做密碼修改)</p>");
                     if (getMessage(from, to, subject, text.toString())) {
                         out.println("寄件成功");
+                        if (b) {
+                            out.print("<script>alert(\"信件已經寄出，請於10分鐘內完成密碼修改。\");</script>");
+                        } else {
+                            out.print("<script>alert(\"您輸入的信箱並未在資料庫之中，如有問題請通知系統管理者。\");</script>");
+                        }
+                        res.addHeader("refresh", "0;URL=index.jsp");
                     } else {
                         out.println("寄件失敗");
+                        res.addHeader("refresh", "3;URL=index.jsp");
                     }
                     break;
                 }
-            }
-            if (b) {
-                out.print("<script>alert(\"信件已經寄出，請於10分鐘內完成密碼修改。\");</script>");
-                res.addHeader("refresh", "0;URL=index.jsp");
-            } else {
-                out.print("<script>alert(\"您輸入的信箱並未在資料庫之中，如有問題請通知系統管理者。\");</script>");
-                res.addHeader("refresh", "0;URL=index.jsp");
             }
         }
     }
