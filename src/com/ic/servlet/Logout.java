@@ -5,6 +5,7 @@ import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebInitParam;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,25 +21,32 @@ import org.apache.log4j.Logger;
 public class Logout extends HttpServlet {
 
     private String LOGOUT_VIEW;
-    
+
     @Override
     public void init() throws ServletException {
         LOGOUT_VIEW = getServletConfig().getInitParameter("LOGOUT_VIEW");
     }
-    
+
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         BasicConfigurator.configure();
         Logger logger = Logger.getLogger(InsertData.class);
-        HttpSession session = request.getSession();
-        logger.info(session.getAttribute("Jobnumber") + " is logout.");
-        session.invalidate();
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            logger.info(session.getAttribute("Jobnumber") + " is logout.");
+            session.invalidate();
+//            session.setMaxInactiveInterval(0);
+            Cookie c[] = request.getCookies();
+            for (Cookie cookie : c) {
+                cookie.setMaxAge(0);
+            } 
+        }
         request.getRequestDispatcher(LOGOUT_VIEW).forward(request, response);
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-        doPost(req,res);
+        doPost(req, res);
     }
 }

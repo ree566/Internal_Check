@@ -38,7 +38,7 @@ public class Login extends HttpServlet {
             throws ServletException, IOException {
         BasicConfigurator.configure();
         Logger logger = Logger.getLogger(Login.class);
-        HttpSession session = request.getSession(true);
+        HttpSession session = request.getSession();
         String name = request.getParameter("username");
         String password = request.getParameter("password");
         boolean flag = false;

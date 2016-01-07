@@ -43,7 +43,7 @@ public class DbBean implements Serializable {
         try {
             Context initContext = new InitialContext();
             Context envContext = (Context) initContext.lookup("java:/comp/env");
-            dataSource = (DataSource) envContext.lookup("jdbc/demo");
+            dataSource = (DataSource) envContext.lookup("jdbc/demo1");
             conn = dataSource.getConnection();
         } catch (NamingException | SQLException ex) {
             logger.error(ex);
